@@ -18,8 +18,8 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
 
-  private Joystick driverJoystickLeft = new Joystick(Constants.DRIVER_JOYSTICK_LEFT);
-  private Joystick driverJoystickRight= new Joystick(Constants.DRIVER_JOYSTICK_RIGHT);
+  public static Joystick driverJoystickLeft = new Joystick(Constants.DRIVER_JOYSTICK_LEFT);
+  public static Joystick driverJoystickRight= new Joystick(Constants.DRIVER_JOYSTICK_RIGHT);
 
   private XboxController operatorController = new XboxController(Constants.OPERATOR_CONTROLLER);
 

@@ -19,6 +19,9 @@ public final class Constants {
   public static final int DRIVER_JOYSTICK_RIGHT = 3;
   public static final int DRIVER_JOYSTICK_AXIS = 1;
 
+  //Left Side
+    public static final int DRIVER_AUTO_BUTTON = 3;
+
 
   //OPERATOR CONTROLLER ID
   public static final int OPERATOR_CONTROLLER = 1;

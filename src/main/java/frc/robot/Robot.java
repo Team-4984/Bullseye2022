@@ -14,6 +14,7 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSink;
 import edu.wpi.cscore.VideoSource;
 import edu.wpi.first.cameraserver.CameraServer;
+import frc.robot.limelight.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -22,10 +23,16 @@ import edu.wpi.first.cameraserver.CameraServer;
  * project.
  */
 public class Robot extends TimedRobot {
+
+
   public static DriveTrain driveTrain = new DriveTrain();
+  public static LLdriveControl lldriveControl = new LLdriveControl();
+  public static LLmain llmain = new LLmain();
+  public static LLControllers llcontrollers = new LLControllers();
   private Command m_autonomousCommand;
 
   public static RobotContainer m_robotContainer;
+
 
 
   /**
@@ -79,7 +86,18 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+
+    //Limelight is a studdddd
+
+    LL_Update_Tracking.Tracking();
+
+    llcontrollers.controllers();
+
+
+  }
+
+  
 
   @Override
   public void testInit() {
@@ -94,7 +112,7 @@ public class Robot extends TimedRobot {
   public static UsbCamera usbCamera1 = null;
   public class CameraThread extends Thread {
     final int CAMERA1 = 0;
-    private final int currentCamera = CAMERA1;
+   // private final int currentCamera = CAMERA1;   // UNCOMMENT WHEN RUNNING THE PROGRAM THRU ROBORIO!!!!
 
     VideoSink server;
     
@@ -142,28 +160,31 @@ public class Robot extends TimedRobot {
   }
 
 
-public static CameraThread myCameraThread;
+  public static CameraThread myCameraThread;
  
-@Override
-public void robotInit() {
- 
+  @Override
+  public void robotInit() {
+
+
+
+    llmain.LL_Data();
 
     m_robotContainer = new RobotContainer();
 
-  myCameraThread = new CameraThread();
-  usbCamera1 = CameraServer.getInstance().startAutomaticCapture(myCameraThread.CAMERA1);
-  myCameraThread.server = CameraServer.getInstance().getServer();
+    myCameraThread = new CameraThread();
+    usbCamera1 = CameraServer.getInstance().startAutomaticCapture(myCameraThread.CAMERA1);
+    myCameraThread.server = CameraServer.getInstance().getServer();
 
-  usbCamera1.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);
+    usbCamera1.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);
 
 
-  myCameraThread.setCameraConfig();
+    myCameraThread.setCameraConfig();
  
-  myCameraThread.start();
-  myCameraThread.setResolutionHigh();
-  myCameraThread.getCameraConfig();
+    myCameraThread.start();
+    myCameraThread.setResolutionHigh();
+    myCameraThread.getCameraConfig();
 
-  m_autonomousCommand = (new AutoCommand());
+    m_autonomousCommand = (new AutoCommand());
 
   }
 }

@@ -4,9 +4,7 @@
 
 package frc.robot.subsystems;
 
-
 import frc.robot.Constants;
-
 
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
@@ -14,7 +12,8 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Joystick;
-
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveTrain extends SubsystemBase {
@@ -23,13 +22,22 @@ public class DriveTrain extends SubsystemBase {
    */
 
 
-  private static CANSparkMax leftFrontDriveMotor = new CANSparkMax(Constants.MOTOR_LEFT_FRONT, MotorType.kBrushless);
-  private static CANSparkMax leftBackDriveMotor = new CANSparkMax(Constants.MOTOR_LEFT_BACK, MotorType.kBrushless);
-  private static CANSparkMax rightFrontDriveMotor = new CANSparkMax(Constants.MOTOR_RIGHT_FRONT, MotorType.kBrushless);
-  private static CANSparkMax rightBackDriveMotor = new CANSparkMax(Constants.MOTOR_RIGHT_BACK, MotorType.kBrushless);
+  public static CANSparkMax leftFrontDriveMotor = new CANSparkMax(Constants.MOTOR_LEFT_FRONT, MotorType.kBrushless);
+  public static CANSparkMax leftBackDriveMotor = new CANSparkMax(Constants.MOTOR_LEFT_BACK, MotorType.kBrushless);
+  public static CANSparkMax rightFrontDriveMotor = new CANSparkMax(Constants.MOTOR_RIGHT_FRONT, MotorType.kBrushless);
+  public static CANSparkMax rightBackDriveMotor = new CANSparkMax(Constants.MOTOR_RIGHT_BACK, MotorType.kBrushless);
 
   public CANEncoder leftFrontDriveEncoder = leftFrontDriveMotor.getEncoder();
   private CANEncoder rightFrontDriveEncoder = rightFrontDriveMotor.getEncoder();
+
+
+  //Limelight Speed Controller
+  public SpeedControllerGroup m_LeftMotors = new SpeedControllerGroup(leftBackDriveMotor,leftFrontDriveMotor);
+  public SpeedControllerGroup m_RightMotors = new SpeedControllerGroup(rightBackDriveMotor,rightFrontDriveMotor);
+
+  public DifferentialDrive m_Drive = new DifferentialDrive(m_LeftMotors,m_RightMotors);
+  //END limelight speed controller
+
 
   public DriveTrain() {
     leftBackDriveMotor.follow(leftFrontDriveMotor);

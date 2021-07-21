@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
 public class DriveDistanceCommand extends CommandBase {
-  private int d_Distance;
+  public int d_Distance;
   private double m_left;
   private double m_right;
 
